@@ -12,7 +12,6 @@ import GHC.Generics
 
 data CreateIndexOptions = CreateIndexOptions
   { filePath     :: FilePath
-  , backend      :: String
   , method       :: String
   , outputIbFile :: Maybe FilePath
   , outputBpFile :: Maybe FilePath

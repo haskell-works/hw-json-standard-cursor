@@ -9,7 +9,7 @@
 
 {-# OPTIONS_GHC -fno-warn-missing-signatures #-}
 
-module HaskellWorks.Data.Json.TypeSpec (spec) where
+module HaskellWorks.Data.Json.Standard.Cursor.TypeSpec (spec) where
 
 import Control.Monad
 import HaskellWorks.Data.BalancedParens.BalancedParens

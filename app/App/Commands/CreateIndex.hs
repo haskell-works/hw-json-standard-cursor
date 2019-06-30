@@ -23,7 +23,6 @@ import qualified Data.ByteString.Lazy                                           
 import qualified HaskellWorks.Data.ByteString                                       as BS
 import qualified HaskellWorks.Data.ByteString.Lazy                                  as LBS
 import qualified HaskellWorks.Data.Json.Simd.Index.Standard                         as STSI
-import qualified HaskellWorks.Data.Json.Simple.Cursor.SemiIndex                     as SISI
 import qualified HaskellWorks.Data.Json.Standard.Cursor.Internal.Blank              as J
 import qualified HaskellWorks.Data.Json.Standard.Cursor.Internal.BlankedJson        as J
 import qualified HaskellWorks.Data.Json.Standard.Cursor.Internal.MakeIndex          as J
@@ -36,8 +35,8 @@ import qualified System.IO.MMap                                                 
 {-# ANN module ("HLint: ignore Reduce duplication"  :: String) #-}
 {-# ANN module ("HLint: ignore Redundant do"        :: String) #-}
 
-runCreateIndexStandard :: Z.CreateIndexOptions -> IO ()
-runCreateIndexStandard opts = do
+runCreateIndex :: Z.CreateIndexOptions -> IO ()
+runCreateIndex opts = do
   let filePath = opts ^. the @"filePath"
   let outputIbFile = opts ^. the @"outputIbFile" & fromMaybe (filePath <> ".ib.idx")
   let outputBpFile = opts ^. the @"outputBpFile" & fromMaybe (filePath <> ".bp.idx")
@@ -82,36 +81,12 @@ runCreateIndexStandard opts = do
       IO.hPutStrLn IO.stderr $ "Unknown method " <> show unknown
       IO.exitFailure
 
-runCreateIndexSimple :: Z.CreateIndexOptions -> IO ()
-runCreateIndexSimple opts = do
-  let filePath = opts ^. the @"filePath"
-  let outputIbFile = opts ^. the @"outputIbFile" & fromMaybe (filePath <> ".ib.idx")
-  let outputBpFile = opts ^. the @"outputBpFile" & fromMaybe (filePath <> ".bp.idx")
-  (fptr :: ForeignPtr Word8, offset, size) <- IO.mmapFileForeignPtr filePath IO.ReadOnly Nothing
-  let !bs = BSI.fromForeignPtr (castForeignPtr fptr) offset size
-  let SISI.SemiIndex _ ibs bps = SISI.buildSemiIndex bs
-  LBS.writeFile outputIbFile (LBS.toLazyByteString ibs)
-  LBS.writeFile outputBpFile (LBS.toLazyByteString bps)
-
-runCreateIndex :: Z.CreateIndexOptions -> IO ()
-runCreateIndex opts = case opts ^. the @"backend" of
-  "standard" -> runCreateIndexStandard  opts
-  "simple"   -> runCreateIndexSimple    opts
-  unknown    -> IO.hPutStrLn IO.stderr $ "Unknown backend " <> show unknown
-
 optsCreateIndex :: Parser Z.CreateIndexOptions
 optsCreateIndex = Z.CreateIndexOptions
   <$> strOption
         (   long "input"
         <>  short 'i'
         <>  help "Input JSON file"
-        <>  metavar "STRING"
-        )
-  <*> strOption
-        (   long "backend"
-        <>  short 'b'
-        <>  value "standard"
-        <>  help "Backend for creating index"
         <>  metavar "STRING"
         )
   <*> strOption
