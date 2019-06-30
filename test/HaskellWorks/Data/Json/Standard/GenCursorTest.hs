@@ -14,10 +14,11 @@ module HaskellWorks.Data.Json.Standard.GenCursorTest(genTest) where
 import Control.Monad
 import HaskellWorks.Data.BalancedParens.BalancedParens
 import HaskellWorks.Data.Bits.BitWise
-import HaskellWorks.Data.Json.Internal.Index
-import HaskellWorks.Data.Json.Internal.Standard.Cursor.Token
-import HaskellWorks.Data.Json.Internal.Token
+-- import HaskellWorks.Data.Json.Internal.Index
+-- import HaskellWorks.Data.Json.Internal.Standard.Cursor.Token
+-- import HaskellWorks.Data.Json.Internal.Token
 import HaskellWorks.Data.Json.Standard.Cursor.Generic
+import HaskellWorks.Data.Positioning
 import HaskellWorks.Data.RankSelect.Base.Rank0
 import HaskellWorks.Data.RankSelect.Base.Rank1
 import HaskellWorks.Data.RankSelect.Base.Select1
@@ -37,6 +38,23 @@ ns = TC.nextSibling
 pn = TC.parent
 ss = TC.subtreeSize
 
+strAt :: forall t u.
+  ( Eq                t
+  , Show              t
+  , Select1           t
+  , Eq                u
+  , Show              u
+  , Rank0             u
+  , Rank1             u
+  , BalancedParens    u
+  , TestBit           u)
+  => Int
+  -> GenericCursor BS.ByteString t u
+  -> Maybe BS.ByteString
+strAt n k = if balancedParens k .?. lastPositionOf (cursorRank k)
+  then Just (BS.take n (BS.drop (fromIntegral (toCount (jsonCursorPos k))) (cursorText k)))
+  else Nothing
+
 genTest :: forall t u.
   ( Eq                t
   , Show              t
@@ -53,7 +71,7 @@ genTest t mkCursor = do
     describe "For empty json array" $ do
       let cursor = mkCursor "[null]"
       it "can navigate down and forwards" $ requireTest $ do
-        jsonIndexAt cursor === Right (JsonIndexArray [JsonIndexNull])
+        strAt 1 cursor === Just "["
     describe "For sample Json" $ do
       let cursor = mkCursor "\
             \{ \
@@ -90,14 +108,14 @@ genTest t mkCursor = do
         (fc >=> ns >=> fc >=> ns >=> ns >=> ns >=> fc >=> ns >=> ns        >=> ss) cursor === Just 1
         (fc >=> ns >=> fc >=> ns >=> ns >=> ns >=> fc >=> ns >=> ns >=> ns >=> ss) cursor === Just 6
       it "can get token at cursor" $ requireTest $ do
-        (jsonTokenAt                                                                      ) cursor === Just (JsonTokenBraceL                 )
-        (fc                                                                >=> jsonTokenAt) cursor === Just (JsonTokenString   "widget"      )
-        (fc >=> ns                                                         >=> jsonTokenAt) cursor === Just (JsonTokenBraceL                 )
-        (fc >=> ns >=> fc                                                  >=> jsonTokenAt) cursor === Just (JsonTokenString   "debug"       )
-        (fc >=> ns >=> fc >=> ns                                           >=> jsonTokenAt) cursor === Just (JsonTokenString   "on"          )
-        (fc >=> ns >=> fc >=> ns >=> ns                                    >=> jsonTokenAt) cursor === Just (JsonTokenString   "window"      )
-        (fc >=> ns >=> fc >=> ns >=> ns >=> ns                             >=> jsonTokenAt) cursor === Just (JsonTokenBraceL                 )
-        (fc >=> ns >=> fc >=> ns >=> ns >=> ns >=> fc                      >=> jsonTokenAt) cursor === Just (JsonTokenString   "name"        )
-        (fc >=> ns >=> fc >=> ns >=> ns >=> ns >=> fc >=> ns               >=> jsonTokenAt) cursor === Just (JsonTokenString   "main_window" )
-        (fc >=> ns >=> fc >=> ns >=> ns >=> ns >=> fc >=> ns >=> ns        >=> jsonTokenAt) cursor === Just (JsonTokenString   "dimensions"  )
-        (fc >=> ns >=> fc >=> ns >=> ns >=> ns >=> fc >=> ns >=> ns >=> ns >=> jsonTokenAt) cursor === Just (JsonTokenBracketL               )
+        (                                                                      strAt  1) cursor === Just "{"
+        (fc                                                                >=> strAt  8) cursor === Just "\"widget\""
+        (fc >=> ns                                                         >=> strAt  1) cursor === Just "{"
+        (fc >=> ns >=> fc                                                  >=> strAt  7) cursor === Just "\"debug\""
+        (fc >=> ns >=> fc >=> ns                                           >=> strAt  4) cursor === Just "\"on\""
+        (fc >=> ns >=> fc >=> ns >=> ns                                    >=> strAt  8) cursor === Just "\"window\""
+        (fc >=> ns >=> fc >=> ns >=> ns >=> ns                             >=> strAt  1) cursor === Just "{"
+        (fc >=> ns >=> fc >=> ns >=> ns >=> ns >=> fc                      >=> strAt  6) cursor === Just "\"name\""
+        (fc >=> ns >=> fc >=> ns >=> ns >=> ns >=> fc >=> ns               >=> strAt 13) cursor === Just "\"main_window\""
+        (fc >=> ns >=> fc >=> ns >=> ns >=> ns >=> fc >=> ns >=> ns        >=> strAt 12) cursor === Just "\"dimensions\""
+        (fc >=> ns >=> fc >=> ns >=> ns >=> ns >=> fc >=> ns >=> ns >=> ns >=> strAt  1) cursor === Just "["
