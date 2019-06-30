@@ -93,6 +93,8 @@ library
           , vector
           , word8
   hs-source-dirs:       src
+  other-modules:        Paths_hw_json_standard_cursor
+  autogen-modules:      Paths_hw_json_standard_cursor
   exposed-modules:      HaskellWorks.Data.Json.Standard.Cursor
                         HaskellWorks.Data.Json.Standard.Cursor.Fast
                         HaskellWorks.Data.Json.Standard.Cursor.Generic
