@@ -3,7 +3,10 @@
 
 `hw-json-standard-cursor` is support library for `hw-json`, a succinct JSON parsing library.
 
-It uses succinct data-structures to allow traversal of large JSON strings with minimal memory overhead.
+It is used to create "interest-bits" (`*.ib.idx`) files and
+"balanced-parenthesis" (`*.bp.idx`) files.  These can then be loaded by the `hw-json`
+library to enable parsing of parts of the original JSON file without deserialising
+the entire JSON file into objects in memory.
 
 For more information see [`hw-json`](https://github.com/haskell-works/hw-json).
 
