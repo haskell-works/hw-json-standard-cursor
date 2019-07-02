@@ -33,7 +33,7 @@ fromByteString bs = GenericCursor
   , balancedParens  = RM.mkRangeMin (makeCsPoppy bp)
   , cursorRank      = 1
   }
-  where J.IbBp ib bp = J.toIbBp bs
+  where J.IbBp ib bp = J.slowToIbBp bs
 
 fromForeignRegion :: F.ForeignRegion -> Cursor
 fromForeignRegion (fptr, offset, size) = fromByteString (BSI.fromForeignPtr (castForeignPtr fptr) offset size)
