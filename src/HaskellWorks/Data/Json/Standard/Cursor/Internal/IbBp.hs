@@ -13,12 +13,9 @@ data IbBp = IbBp
   , bp :: DVS.Vector Word64
   }
 
-class ToIbBp a where
-  toIbBp :: a -> IbBp
-
-instance ToIbBp BS.ByteString where
-  toIbBp bs = IbBp
-    { ib = J.toInterestBits64 blankedJson
-    , bp = J.toBalancedParens64 blankedJson
-    }
-    where blankedJson = J.toBlankedJsonTyped bs
+slowToIbBp :: BS.ByteString -> IbBp
+slowToIbBp bs = IbBp
+  { ib = J.toInterestBits64 blankedJson
+  , bp = J.toBalancedParens64 blankedJson
+  }
+  where blankedJson = J.toBlankedJsonTyped bs
