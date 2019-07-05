@@ -10,7 +10,7 @@ module HaskellWorks.Data.Json.Standard.Cursor.Fast
 import Foreign.ForeignPtr
 import HaskellWorks.Data.Json.Standard.Cursor.Generic
 import HaskellWorks.Data.Json.Standard.Cursor.Specific
-import HaskellWorks.Data.RankSelect.CsPoppy
+import HaskellWorks.Data.RankSelect.CsPoppy1
 
 import qualified Data.ByteString                                      as BS
 import qualified Data.ByteString.Char8                                as BSC
@@ -24,7 +24,7 @@ data Fast
 instance SpecificCursor Fast where
   type CursorOf Fast = Cursor
 
-type Cursor = GenericCursor BS.ByteString CsPoppy (RM.RangeMin CsPoppy)
+type Cursor = GenericCursor BS.ByteString CsPoppy1 (RM.RangeMin CsPoppy1)
 
 fromByteString :: BS.ByteString -> Cursor
 fromByteString bs = GenericCursor
