@@ -3,6 +3,8 @@
 module HaskellWorks.Data.Json.Standard.Cursor.Fast
   ( Cursor
   , fromByteString
+  , fromByteStringViaBlanking
+  , fromByteStringViaSimd
   , fromForeignRegion
   , fromString
   , fromBsIbBp
@@ -38,8 +40,22 @@ fromBsIbBp bs ibBp = GenericCursor
   }
   where J.IbBp ibPart bpPart = ibBp
 
+-- | Load a 'Cursor' from a 'ByteString'
 fromByteString :: BS.ByteString -> Cursor
-fromByteString bs = fromBsIbBp bs (J.slowToIbBp bs)
+fromByteString = fromByteStringViaBlanking
+{-# DEPRECATED fromByteString "Use one of the other fromByteString* functions" #-}
+
+-- | Load a 'Cursor' from a 'ByteString' via the blanking process.
+-- This has reasonable performance, but uses a lot of memory due to
+-- the lack of streaming
+fromByteStringViaBlanking :: BS.ByteString -> Cursor
+fromByteStringViaBlanking bs = fromBsIbBp bs (J.slowToIbBp bs)
+
+-- | Load a 'Cursor' from a 'ByteString' via the blanking via `simd`
+-- This has fast performance and streaming, but is only available
+-- recent x86 platforms
+fromByteStringViaSimd :: BS.ByteString -> Cursor
+fromByteStringViaSimd jsonBs = fromBsIbBp jsonBs (simdToIbBp jsonBs)
 
 fromForeignRegion :: F.ForeignRegion -> Cursor
 fromForeignRegion (fptr, offset, size) = fromByteString (BSI.fromForeignPtr (castForeignPtr fptr) offset size)

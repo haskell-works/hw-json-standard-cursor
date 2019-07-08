@@ -21,7 +21,7 @@ import qualified HaskellWorks.Data.Json.Standard.Cursor.Fast as FAST
 loadCursor :: String -> IO FAST.Cursor
 loadCursor path = do
   bs <- BS.mmap path
-  let !cursor = FAST.fromByteString bs
+  let !cursor = FAST.fromByteStringViaBlanking bs
   return cursor
 
 loadCursorWithIndex :: String -> IO (GenericCursor BSI.ByteString (DVS.Vector Word64) (SimpleBalancedParens (DVS.Vector Word64)))
