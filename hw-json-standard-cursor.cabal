@@ -123,10 +123,10 @@ executable hw-json-standard-cursor
           , semigroups
           , text
           , vector
-  main-is:            Main.hs
-  hs-source-dirs:     app
-  ghc-options:        -threaded -rtsopts -with-rtsopts=-N
-  build-depends:      hw-json-standard-cursor
+  main-is:              Main.hs
+  hs-source-dirs:       app
+  ghc-options:          -threaded -rtsopts -with-rtsopts=-N
+  build-depends:        hw-json-standard-cursor
   other-modules:
       App.Commands
       App.Commands.CreateIndex
@@ -144,12 +144,12 @@ test-suite hw-json-standard-cursor-test
           , hw-rankselect
           , hw-rankselect-base
           , vector
-  type:               exitcode-stdio-1.0
-  main-is:            Spec.hs
-  build-depends:      hw-json-standard-cursor
-  hs-source-dirs:     test
-  ghc-options:        -threaded -rtsopts -with-rtsopts=-N
-  build-tools:        hspec-discover
+  type:                 exitcode-stdio-1.0
+  main-is:              Spec.hs
+  build-depends:        hw-json-standard-cursor
+  hs-source-dirs:       test
+  ghc-options:          -threaded -rtsopts -with-rtsopts=-N
+  build-tool-depends:   hspec-discover:hspec-discover
   other-modules:
       HaskellWorks.Data.Json.Standard.CorpusSpec
       HaskellWorks.Data.Json.Standard.Cursor.BalancedParensSpec
@@ -166,8 +166,8 @@ benchmark bench
           , directory
           , mmap
           , semigroups
-  type:               exitcode-stdio-1.0
-  main-is:            Main.hs
-  hs-source-dirs:     bench
-  build-depends:      hw-json-standard-cursor
-  other-modules:      Paths_hw_json_standard_cursor
+  type:                 exitcode-stdio-1.0
+  main-is:              Main.hs
+  hs-source-dirs:       bench
+  build-depends:        hw-json-standard-cursor
+  other-modules:        Paths_hw_json_standard_cursor
