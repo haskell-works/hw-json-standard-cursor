@@ -1,27 +1,27 @@
 cabal-version:  2.2
 
-name:           hw-json-standard-cursor
-version:        0.2.1.1
-synopsis:       Memory efficient JSON parser
-description:    Memory efficient JSON parser. Please see README.md
-category:       Data
-homepage:       http://github.com/haskell-works/hw-json-standard-cursor#readme
-bug-reports:    https://github.com/haskell-works/hw-json-standard-cursor/issues
-author:         John Ky
-maintainer:     newhoggy@gmail.com
-copyright:      2016-2019 John Ky
-license:        BSD-3-Clause
-license-file:   LICENSE
-build-type:     Simple
-extra-source-files:
-    README.md
-    corpus/5000B.json
-    corpus/5000B.json.bp.idx
-    corpus/5000B.json.ib.idx
-    corpus/issue-0001.json
-    corpus/issue-0001.json.bp.idx
-    corpus/issue-0001.json.ib.idx
-    corpus/issue-0001.md
+name:                   hw-json-standard-cursor
+version:                0.2.1.1
+synopsis:               Memory efficient JSON parser
+description:            Memory efficient JSON parser. Please see README.md
+category:               Data
+homepage:               http://github.com/haskell-works/hw-json-standard-cursor#readme
+bug-reports:            https://github.com/haskell-works/hw-json-standard-cursor/issues
+author:                 John Ky
+maintainer:             newhoggy@gmail.com
+copyright:              2016-2019 John Ky
+license:                BSD-3-Clause
+license-file:           LICENSE
+tested-with:            GHC == 8.8.1, GHC == 8.6.3, GHC == 8.4.4, GHC == 8.2.2
+build-type:             Simple
+extra-source-files:     README.md
+                        corpus/5000B.json
+                        corpus/5000B.json.bp.idx
+                        corpus/5000B.json.ib.idx
+                        corpus/issue-0001.json
+                        corpus/issue-0001.json.bp.idx
+                        corpus/issue-0001.json.ib.idx
+                        corpus/issue-0001.md
 
 source-repository head
   type: git
@@ -73,19 +73,19 @@ common config
     cpp-options: -DBMI2_ENABLED
 
 library
-  import:   base, config
-          , array
-          , bits-extra
-          , bytestring
-          , hw-balancedparens
-          , hw-bits
-          , hw-json-simd
-          , hw-prim
-          , hw-rankselect
-          , hw-rankselect-base
-          , mmap
-          , vector
-          , word8
+  import:               base, config
+                      , array
+                      , bits-extra
+                      , bytestring
+                      , hw-balancedparens
+                      , hw-bits
+                      , hw-json-simd
+                      , hw-prim
+                      , hw-rankselect
+                      , hw-rankselect-base
+                      , mmap
+                      , vector
+                      , word8
   hs-source-dirs:       src
   other-modules:        Paths_hw_json_standard_cursor
   autogen-modules:      Paths_hw_json_standard_cursor
@@ -109,63 +109,61 @@ library
                         HaskellWorks.Data.Json.Standard.Cursor.Type
 
 executable hw-json-standard-cursor
-  import:   base, config
-          , bytestring
-          , generic-lens
-          , hw-balancedparens
-          , hw-json-simd
-          , hw-prim
-          , hw-rankselect
-          , hw-rankselect-base
-          , lens
-          , mmap
-          , optparse-applicative
-          , semigroups
-          , text
-          , vector
+  import:               base, config
+                      , bytestring
+                      , generic-lens
+                      , hw-balancedparens
+                      , hw-json-simd
+                      , hw-prim
+                      , hw-rankselect
+                      , hw-rankselect-base
+                      , lens
+                      , mmap
+                      , optparse-applicative
+                      , semigroups
+                      , text
+                      , vector
   main-is:              Main.hs
   hs-source-dirs:       app
   ghc-options:          -threaded -rtsopts -with-rtsopts=-N
   build-depends:        hw-json-standard-cursor
-  other-modules:
-      App.Commands
-      App.Commands.CreateIndex
-      App.Commands.Types
+  other-modules:        App.Commands
+                        App.Commands.CreateIndex
+                        App.Commands.Types
 
 test-suite hw-json-standard-cursor-test
-  import:   base, config
-          , bytestring
-          , hedgehog
-          , hspec
-          , hw-balancedparens
-          , hw-bits
-          , hw-hspec-hedgehog
-          , hw-prim
-          , hw-rankselect
-          , hw-rankselect-base
-          , vector
+  import:               base, config
+                      , bytestring
+                      , hedgehog
+                      , hspec
+                      , hw-balancedparens
+                      , hw-bits
+                      , hw-hspec-hedgehog
+                      , hw-prim
+                      , hw-rankselect
+                      , hw-rankselect-base
+                      , vector
   type:                 exitcode-stdio-1.0
   main-is:              Spec.hs
   build-depends:        hw-json-standard-cursor
   hs-source-dirs:       test
   ghc-options:          -threaded -rtsopts -with-rtsopts=-N
   build-tool-depends:   hspec-discover:hspec-discover
-  other-modules:
-      HaskellWorks.Data.Json.Standard.CorpusSpec
-      HaskellWorks.Data.Json.Standard.Cursor.BalancedParensSpec
-      HaskellWorks.Data.Json.Standard.Cursor.InterestBitsSpec
-      HaskellWorks.Data.Json.Standard.Cursor.Internal.BlankSpec
-      HaskellWorks.Data.Json.Standard.Cursor.TypeSpec
-      HaskellWorks.Data.Json.Standard.CursorSpec
-      HaskellWorks.Data.Json.Standard.GenCursorTest
+  other-modules:        HaskellWorks.Data.Json.Standard.CorpusSpec
+                        HaskellWorks.Data.Json.Standard.Cursor.BalancedParensSpec
+                        HaskellWorks.Data.Json.Standard.Cursor.InterestBitsSpec
+                        HaskellWorks.Data.Json.Standard.Cursor.Internal.BlankSpec
+                        HaskellWorks.Data.Json.Standard.Cursor.TypeSpec
+                        HaskellWorks.Data.Json.Standard.CursorSpec
+                        HaskellWorks.Data.Json.Standard.GenCursorTest
 
 benchmark bench
-  import:   base, config
-          , bytestring
-          , criterion
-          , directory
-          , mmap
-          , semigroups
+  import:               base, config
+                      , bytestring
+                      , criterion
+                      , directory
+                      , mmap
+                      , semigroups
   type:                 exitcode-stdio-1.0
   main-is:              Main.hs
   hs-source-dirs:       bench
