@@ -170,7 +170,6 @@ benchmark bench
   main-is:              Main.hs
   hs-source-dirs:       bench
   build-depends:        hw-json-standard-cursor
-  other-modules:        Paths_hw_json_standard_cursor
 
 test-suite hw-json-standard-cursor-doctest
   import:               base, config
