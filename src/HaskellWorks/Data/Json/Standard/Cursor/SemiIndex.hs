@@ -219,16 +219,16 @@ buildFromByteString3 bss = makePreSiChunk <$> buildFromByteString2 bss
   where makePreSiChunk :: DVS.Vector Word64 -> PreSiChunk (DVS.Vector Word64)
         makePreSiChunk v = PreSiChunk (makeIb v) (makeBpOp v) (makeBpCl v)
         makeIb :: DVS.Vector Word64 -> DVS.Vector Word64
-        makeIb v = asVector64 $ BS.toByteString $ DVS.constructN (DVS.length v) go
-          where go :: DVS.Vector Word16 -> Word16
-                go u = let ui = DVS.length u in fromIntegral (pext (DVS.unsafeIndex v ui) 0x4444444444444444)
+        makeIb v = asVector64 $ BS.toByteString $ DVS.generate (DVS.length v) go
+          where go :: Int -> Word16
+                go uj = let ui = fromIntegral uj in fromIntegral (pext (DVS.unsafeIndex v ui) 0x4444444444444444)
         makeBpOp :: DVS.Vector Word64 -> DVS.Vector Word64
-        makeBpOp v = asVector64 $ BS.toByteString $ DVS.constructN (DVS.length v) go
-          where go :: DVS.Vector Word16 -> Word16
-                go u = let ui = DVS.length u in fromIntegral (pext (DVS.unsafeIndex v ui) 0x2222222222222222)
-        makeBpCl v = asVector64 $ BS.toByteString $ DVS.constructN (DVS.length v) go
-          where go :: DVS.Vector Word16 -> Word16
-                go u = let ui = DVS.length u in fromIntegral (pext (DVS.unsafeIndex v ui) 0x1111111111111111)
+        makeBpOp v = asVector64 $ BS.toByteString $ DVS.generate (DVS.length v) go
+          where go :: Int -> Word16
+                go uj = let ui = fromIntegral uj in fromIntegral (pext (DVS.unsafeIndex v ui) 0x2222222222222222)
+        makeBpCl v = asVector64 $ BS.toByteString $ DVS.generate (DVS.length v) go
+          where go :: Int -> Word16
+                go uj = let ui = fromIntegral uj in fromIntegral (pext (DVS.unsafeIndex v ui) 0x1111111111111111)
 
 toIbBpBuilders :: [PreSiChunk (DVS.Vector Word64)] -> [SiChunk (DVS.Vector Word64)]
 toIbBpBuilders = go 0 0
