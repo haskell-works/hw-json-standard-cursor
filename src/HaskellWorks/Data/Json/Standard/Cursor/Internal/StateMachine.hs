@@ -27,21 +27,20 @@ newtype IntState = IntState Int deriving (Eq, Ord, Show, Num)
 data State = InJson | InString | InEscape | InValue deriving (Eq, Enum, Bounded, Show)
 
 phiTable :: DV.Vector (DVS.Vector Word8)
-phiTable = DV.constructN 5 gos
-  where gos :: DV.Vector (DVS.Vector Word8) -> DVS.Vector Word8
-        gos v = DVS.constructN 256 go
-          where vi = DV.length v
-                go :: DVS.Vector Word8 -> Word8
-                go u = fromIntegral (snd (stateMachine (fromIntegral ui) (toEnum vi)))
-                  where ui = DVS.length u
+phiTable = DV.generate 5 gos
+  where gos :: Int -> DVS.Vector Word8
+        gos vj = DVS.generate 256 go
+          where vi = fromIntegral vj
+                go :: Int -> Word8
+                go uj = fromIntegral (snd (stateMachine (fromIntegral uj) (toEnum vi)))
 {-# NOINLINE phiTable #-}
 
 phiTable2 :: DVS.Vector Word8
-phiTable2 = DVS.constructN (4 * fromIntegral iLen) go
+phiTable2 = DVS.generate (4 * fromIntegral iLen) go
   where iLen = 256 :: Int
-        go :: DVS.Vector Word8 -> Word8
-        go u = fromIntegral (snd (stateMachine (fromIntegral ui) (toEnum (fromIntegral uj))))
-          where (uj, ui) = fromIntegral (DVS.length u) `divMod` iLen
+        go :: Int -> Word8
+        go uj = fromIntegral (snd (stateMachine (fromIntegral ui) (toEnum (fromIntegral uk))))
+          where (uk, ui) = fromIntegral uj `divMod` iLen
 {-# NOINLINE phiTable2 #-}
 
 lookupPhiTable :: IntState -> Word8 -> Word8
@@ -49,31 +48,31 @@ lookupPhiTable (IntState s) w = DVS.unsafeIndex phiTable2 (s * 256 + fromIntegra
 {-# INLINE lookupPhiTable #-}
 
 phiTableSimd :: DVS.Vector Word32
-phiTableSimd = DVS.constructN 256 go
-  where go :: DVS.Vector Word32 -> Word32
-        go v =  (snd (stateMachine vi InJson  ) .<.  0) .|.
+phiTableSimd = DVS.generate 256 go
+  where go :: Int -> Word32
+        go vj = (snd (stateMachine vi InJson  ) .<.  0) .|.
                 (snd (stateMachine vi InString) .<.  8) .|.
                 (snd (stateMachine vi InEscape) .<. 16) .|.
                 (snd (stateMachine vi InValue ) .<. 24)
-          where vi = fromIntegral (DVS.length v)
+          where vi = fromIntegral vj
 {-# NOINLINE phiTableSimd #-}
 
 transitionTable :: DV.Vector (DVS.Vector Word8)
-transitionTable = DV.constructN 5 gos
-  where gos :: DV.Vector (DVS.Vector Word8) -> DVS.Vector Word8
-        gos v = DVS.constructN 256 go
-          where vi = DV.length v
-                go :: DVS.Vector Word8 -> Word8
-                go u = fromIntegral (fromEnum (fst (stateMachine ui (toEnum vi))))
-                  where ui = fromIntegral (DVS.length u)
+transitionTable = DV.generate 5 gos
+  where gos :: Int -> DVS.Vector Word8
+        gos vj = DVS.generate 256 go
+          where vi = fromIntegral vj
+                go :: Int -> Word8
+                go uj = fromIntegral (fromEnum (fst (stateMachine ui (toEnum vi))))
+                  where ui = fromIntegral uj
 {-# NOINLINE transitionTable #-}
 
 transitionTable2 :: DVS.Vector Word8
-transitionTable2 = DVS.constructN (4 * fromIntegral iLen) go
+transitionTable2 = DVS.generate (4 * fromIntegral iLen) go
   where iLen = 256 :: Int
-        go :: DVS.Vector Word8 -> Word8
-        go u = fromIntegral (fromEnum (fst (stateMachine (fromIntegral ui) (toEnum (fromIntegral uj)))))
-          where (uj, ui) = fromIntegral (DVS.length u) `divMod` iLen
+        go :: Int -> Word8
+        go uj = fromIntegral (fromEnum (fst (stateMachine (fromIntegral ui) (toEnum (fromIntegral uk)))))
+          where (uk, ui) = fromIntegral uj `divMod` iLen
 {-# NOINLINE transitionTable2 #-}
 
 lookupTransitionTable :: IntState -> Word8 -> IntState
@@ -81,13 +80,13 @@ lookupTransitionTable (IntState s) w = fromIntegral (DVS.unsafeIndex transitionT
 {-# INLINE lookupTransitionTable #-}
 
 transitionTableSimd :: DVS.Vector Word64
-transitionTableSimd = DVS.constructN 256 go
-  where go :: DVS.Vector Word64 -> Word64
-        go v =  fromIntegral (fromEnum (fst (stateMachine vi InJson  ))) .|.
+transitionTableSimd = DVS.generate 256 go
+  where go :: Int -> Word64
+        go vj = fromIntegral (fromEnum (fst (stateMachine vi InJson  ))) .|.
                 fromIntegral (fromEnum (fst (stateMachine vi InString))) .|.
                 fromIntegral (fromEnum (fst (stateMachine vi InEscape))) .|.
                 fromIntegral (fromEnum (fst (stateMachine vi InValue )))
-          where vi = fromIntegral (DVS.length v)
+          where vi = fromIntegral vj
 {-# NOINLINE transitionTableSimd #-}
 
 stateMachine :: Word8 -> State -> (State, Word32)
