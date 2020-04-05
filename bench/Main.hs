@@ -6,7 +6,6 @@ module Main where
 import Control.Monad
 import Criterion.Main
 import Data.List
-import Data.Semigroup                                            ((<>))
 import Data.Word
 import Foreign
 import HaskellWorks.Data.Json.Standard.Cursor.Internal.Blank
