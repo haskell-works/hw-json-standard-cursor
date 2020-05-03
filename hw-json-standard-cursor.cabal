@@ -92,10 +92,10 @@ library
   exposed-modules:      HaskellWorks.Data.Json.Standard.Cursor
                         HaskellWorks.Data.Json.Standard.Cursor.Fast
                         HaskellWorks.Data.Json.Standard.Cursor.Generic
+                        HaskellWorks.Data.Json.Standard.Cursor.IbBp
                         HaskellWorks.Data.Json.Standard.Cursor.Index
                         HaskellWorks.Data.Json.Standard.Cursor.Internal.Blank
                         HaskellWorks.Data.Json.Standard.Cursor.Internal.BlankedJson
-                        HaskellWorks.Data.Json.Standard.Cursor.Internal.IbBp
                         HaskellWorks.Data.Json.Standard.Cursor.Internal.MakeIndex
                         HaskellWorks.Data.Json.Standard.Cursor.Internal.StateMachine
                         HaskellWorks.Data.Json.Standard.Cursor.Internal.ToBalancedParens64

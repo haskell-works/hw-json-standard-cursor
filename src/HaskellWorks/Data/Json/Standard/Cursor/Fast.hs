@@ -13,16 +13,16 @@ module HaskellWorks.Data.Json.Standard.Cursor.Fast
 
 import Foreign.ForeignPtr
 import HaskellWorks.Data.Json.Standard.Cursor.Generic
-import HaskellWorks.Data.Json.Standard.Cursor.Internal.IbBp
+import HaskellWorks.Data.Json.Standard.Cursor.IbBp
 import HaskellWorks.Data.Json.Standard.Cursor.Specific
 import HaskellWorks.Data.RankSelect.CsPoppy1
 
-import qualified Data.ByteString                                      as BS
-import qualified Data.ByteString.Char8                                as BSC
-import qualified Data.ByteString.Internal                             as BSI
-import qualified HaskellWorks.Data.BalancedParens.RangeMin            as RM
-import qualified HaskellWorks.Data.FromForeignRegion                  as F
-import qualified HaskellWorks.Data.Json.Standard.Cursor.Internal.IbBp as J
+import qualified Data.ByteString                             as BS
+import qualified Data.ByteString.Char8                       as BSC
+import qualified Data.ByteString.Internal                    as BSI
+import qualified HaskellWorks.Data.BalancedParens.RangeMin   as RM
+import qualified HaskellWorks.Data.FromForeignRegion         as F
+import qualified HaskellWorks.Data.Json.Standard.Cursor.IbBp as J
 
 data Fast
 

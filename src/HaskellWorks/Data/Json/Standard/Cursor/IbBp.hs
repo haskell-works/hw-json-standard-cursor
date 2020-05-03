@@ -1,6 +1,6 @@
 {-# LANGUAGE BangPatterns #-}
 
-module HaskellWorks.Data.Json.Standard.Cursor.Internal.IbBp
+module HaskellWorks.Data.Json.Standard.Cursor.IbBp
   ( IbBp(..)
   , slowToIbBp
   , simdToIbBp) where
