@@ -1,5 +1,6 @@
 {-# LANGUAGE BinaryLiterals      #-}
 {-# LANGUAGE DeriveFunctor       #-}
+{-# LANGUAGE DeriveGeneric       #-}
 {-# LANGUAGE DeriveTraversable   #-}
 {-# LANGUAGE InstanceSigs        #-}
 {-# LANGUAGE MultiWayIf          #-}
@@ -23,6 +24,7 @@ import Data.Bits.Pdep
 import Data.Bits.Pext
 import Data.Word
 import Foreign.Storable                                             (Storable (..))
+import GHC.Generics
 import HaskellWorks.Data.Bits.BitWise
 import HaskellWorks.Data.Bits.PopCount.PopCount1
 import HaskellWorks.Data.Json.Standard.Cursor.Internal.StateMachine (IntState (..), State (..))
@@ -50,17 +52,17 @@ data PreSiChunk v = PreSiChunk
   { preSiChunkIb   :: !v -- interest bits
   , preSiChunkBpOp :: !v -- balanced parens interest bits
   , preSiChunkBpCl :: !v -- balanced parens open close
-  } deriving (Functor, Traversable, Foldable)
+  } deriving (Functor, Traversable, Foldable, Generic)
 
 data SiChunk v = SiChunk
   { siChunkIb :: !v -- interest bits
   , siChunkBp :: !v -- balanced parens open close
-  } deriving (Functor, Traversable, Foldable)
+  } deriving (Functor, Traversable, Foldable, Generic)
 
 data SemiIndex v = SemiIndex
   { semiIndexIb :: !v
   , semiIndexBp :: !v
-  } deriving (Functor, Traversable, Foldable)
+  } deriving (Functor, Traversable, Foldable, Generic)
 
 semiIndexBuilder :: LBS.ByteString -> SemiIndex B.Builder
 semiIndexBuilder lbs = SemiIndex (B.lazyByteString ibs) (B.byteString (BS.toByteString bps))

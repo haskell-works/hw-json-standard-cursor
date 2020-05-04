@@ -1,13 +1,15 @@
-{-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE DeriveGeneric #-}
 
 module HaskellWorks.Data.Json.Standard.Cursor.IbBp
   ( IbBp(..)
   , slowToIbBp
-  , simdToIbBp) where
+  , simdToIbBp
+  ) where
 
 import Control.Monad
 import Control.Monad.ST                    (ST)
 import Data.Word
+import GHC.Generics
 import HaskellWorks.Data.Vector.AsVector64
 
 import qualified Data.ByteString                                                    as BS
@@ -24,7 +26,7 @@ import qualified HaskellWorks.Data.Vector.Storable                              
 data IbBp = IbBp
   { ib :: DVS.Vector Word64
   , bp :: DVS.Vector Word64
-  }
+  } deriving Generic
 
 slowToIbBp :: BS.ByteString -> IbBp
 slowToIbBp bs = IbBp

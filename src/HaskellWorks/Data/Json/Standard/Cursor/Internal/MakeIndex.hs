@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RankNTypes        #-}
 
@@ -15,6 +16,7 @@ import Data.ByteString                (ByteString)
 import Data.Int
 import Data.Word
 import Data.Word8
+import GHC.Generics
 import HaskellWorks.Data.Bits.BitWise
 import Prelude                        as P
 
@@ -98,7 +100,7 @@ blankedJsonToBalancedParens as = case as of
             MiniTF -> Just (0xFF, (Just False , cs))
           Nothing   -> Nothing
 
-data MiniBP = MiniN | MiniT | MiniF | MiniTF
+data MiniBP = MiniN | MiniT | MiniF | MiniTF deriving Generic
 
 balancedParensOf :: Word8 -> MiniBP
 balancedParensOf c = case c of
