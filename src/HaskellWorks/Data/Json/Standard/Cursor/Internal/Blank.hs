@@ -1,4 +1,5 @@
-{-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE BangPatterns  #-}
+{-# LANGUAGE DeriveGeneric #-}
 
 module HaskellWorks.Data.Json.Standard.Cursor.Internal.Blank
   ( blankJson
@@ -7,6 +8,7 @@ module HaskellWorks.Data.Json.Standard.Cursor.Internal.Blank
 import Data.ByteString                                       (ByteString)
 import Data.Word
 import Data.Word8
+import GHC.Generics
 import HaskellWorks.Data.Json.Standard.Cursor.Internal.Word8
 import Prelude                                               as P
 
@@ -18,6 +20,7 @@ data BlankState
   | InString
   | InNumber
   | InIdent
+  deriving Generic
 
 blankJson :: [BS.ByteString] -> [BS.ByteString]
 blankJson = blankJson' InJson

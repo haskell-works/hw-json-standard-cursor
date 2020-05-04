@@ -1,4 +1,5 @@
 {-# LANGUAGE BinaryLiterals             #-}
+{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings          #-}
 
@@ -14,6 +15,7 @@ module HaskellWorks.Data.Json.Standard.Cursor.Internal.StateMachine
   ) where
 
 import Data.Word
+import GHC.Generics
 import HaskellWorks.Data.Bits.BitWise
 
 import qualified Data.Vector                                           as DV
@@ -22,9 +24,9 @@ import qualified HaskellWorks.Data.Json.Standard.Cursor.Internal.Word8 as W8
 
 {-# ANN module ("HLint: ignore Redundant guard"  :: String) #-}
 
-newtype IntState = IntState Int deriving (Eq, Ord, Show, Num)
+newtype IntState = IntState Int deriving (Eq, Ord, Show, Num, Generic)
 
-data State = InJson | InString | InEscape | InValue deriving (Eq, Enum, Bounded, Show)
+data State = InJson | InString | InEscape | InValue deriving (Eq, Enum, Bounded, Show, Generic)
 
 phiTable :: DV.Vector (DVS.Vector Word8)
 phiTable = DV.generate 5 gos

@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE InstanceSigs          #-}
@@ -11,6 +12,7 @@ module HaskellWorks.Data.Json.Standard.Cursor.Generic
   , jsonCursorPos
   ) where
 
+import GHC.Generics
 import HaskellWorks.Data.Positioning
 import HaskellWorks.Data.RankSelect.Base.Rank0
 import HaskellWorks.Data.RankSelect.Base.Rank1
@@ -26,7 +28,7 @@ data GenericCursor t v w = GenericCursor
   , balancedParens :: !w
   , cursorRank     :: !Count
   }
-  deriving (Eq, Show)
+  deriving (Eq, Generic, Show)
 
 instance (BP.BalancedParens u, Rank1 u, Rank0 u) => TreeCursor (GenericCursor t v u) where
   firstChild :: GenericCursor t v u -> Maybe (GenericCursor t v u)

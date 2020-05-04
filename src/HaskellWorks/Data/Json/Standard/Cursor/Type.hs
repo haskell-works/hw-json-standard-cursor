@@ -1,3 +1,4 @@
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE InstanceSigs          #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
@@ -10,6 +11,7 @@ module HaskellWorks.Data.Json.Standard.Cursor.Type
 import Data.Char
 import Data.String
 import Data.Word8
+import GHC.Generics
 import HaskellWorks.Data.Bits.BitWise
 import HaskellWorks.Data.Drop
 import HaskellWorks.Data.Json.Standard.Cursor.Generic
@@ -32,7 +34,7 @@ data JsonType
   | JsonTypeNumber
   | JsonTypeObject
   | JsonTypeString
-  deriving (Eq, Show)
+  deriving (Eq, Show, Generic)
 
 class JsonTypeAt a where
   jsonTypeAtPosition :: Position -> a -> Maybe JsonType
