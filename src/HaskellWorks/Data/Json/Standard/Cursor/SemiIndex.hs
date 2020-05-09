@@ -45,8 +45,8 @@ import qualified HaskellWorks.Data.Json.Standard.Cursor.Internal.StateMachine   
 import qualified HaskellWorks.Data.Json.Standard.Cursor.Internal.ToBalancedParens64 as J
 import qualified HaskellWorks.Data.Json.Standard.Cursor.Internal.Word8              as W8
 
-{-# ANN module ("HLint: ignore Reduce duplication"  :: String) #-}
-{-# ANN module ("HLint: ignore Redundant do"        :: String) #-}
+{- HLINT ignore "Reduce duplication"  -}
+{- HLINT ignore "Redundant do"        -}
 
 data PreSiChunk v = PreSiChunk
   { preSiChunkIb   :: !v -- interest bits

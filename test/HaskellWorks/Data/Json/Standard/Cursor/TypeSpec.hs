@@ -28,9 +28,8 @@ import qualified HaskellWorks.Data.Json.Standard.Cursor.Fast as FAST
 import qualified HaskellWorks.Data.Json.Standard.Cursor.Slow as SLOW
 import qualified HaskellWorks.Data.TreeCursor                as TC
 
-{-# ANN module ("HLint: ignore Redundant do"        :: String) #-}
-{-# ANN module ("HLint: ignore Reduce duplication"  :: String) #-}
-{-# ANN module ("HLint: ignore Redundant bracket"   :: String) #-}
+{- HLINT ignore "Reduce duplication"  -}
+{- HLINT ignore "Redundant do"        -}
 
 fc = TC.firstChild
 ns = TC.nextSibling

@@ -19,7 +19,7 @@ import qualified Data.Vector.Storable                                        as 
 import qualified HaskellWorks.Data.Json.Standard.Cursor.Internal.BlankedJson as J
 import qualified HaskellWorks.Data.Json.Standard.Cursor.SemiIndex            as SI
 
-{-# ANN module ("HLint: ignore Redundant do"        :: String) #-}
+{- HLINT ignore "Redundant do"        -}
 
 balancedParensOf2 :: BS.ByteString -> DVS.Vector Word64
 balancedParensOf2 bs = let SI.SemiIndex _ bp = SI.buildSemiIndex bs in bp

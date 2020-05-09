@@ -9,7 +9,7 @@ import Test.Hspec
 
 import qualified Data.ByteString as BS
 
-{-# ANN module ("HLint: ignore Redundant do" :: String) #-}
+{- HLINT ignore "Redundant do"        -}
 
 whenBlankedJsonShouldBe :: BS.ByteString -> BS.ByteString -> Spec
 whenBlankedJsonShouldBe original expected = do

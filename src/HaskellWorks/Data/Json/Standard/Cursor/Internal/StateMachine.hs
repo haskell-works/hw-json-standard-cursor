@@ -22,7 +22,7 @@ import qualified Data.Vector                                           as DV
 import qualified Data.Vector.Storable                                  as DVS
 import qualified HaskellWorks.Data.Json.Standard.Cursor.Internal.Word8 as W8
 
-{-# ANN module ("HLint: ignore Redundant guard"  :: String) #-}
+{- HLINT ignore "Reduce guard"        -}
 
 newtype IntState = IntState Int deriving (Eq, Ord, Show, Num, Generic)
 

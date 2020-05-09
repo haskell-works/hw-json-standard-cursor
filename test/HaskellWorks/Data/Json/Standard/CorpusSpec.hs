@@ -23,9 +23,8 @@ import Test.Hspec
 import qualified Data.ByteString                             as BS
 import qualified HaskellWorks.Data.Json.Standard.Cursor.Slow as SLOW
 
-{-# ANN module ("HLint: ignore Redundant do"        :: String) #-}
-{-# ANN module ("HLint: ignore Reduce duplication"  :: String) #-}
-{-# ANN module ("HLint: ignore Redundant bracket"   :: String) #-}
+{- HLINT ignore "Reduce duplication"  -}
+{- HLINT ignore "Redundant do"        -}
 
 spec :: Spec
 spec = describe "HaskellWorks.Data.Json.Corpus" $ do
