@@ -25,7 +25,7 @@ import Prelude                                               hiding (drop)
 import qualified Data.ByteString                  as BS
 import qualified HaskellWorks.Data.BalancedParens as BP
 
-{-# ANN module ("HLint: Reduce duplication" :: String) #-}
+{- HLINT ignore "Reduce duplication"  -}
 
 data JsonType
   = JsonTypeArray

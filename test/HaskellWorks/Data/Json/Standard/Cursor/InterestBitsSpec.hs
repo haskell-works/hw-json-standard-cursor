@@ -18,7 +18,7 @@ import qualified HaskellWorks.Data.Json.Standard.Cursor.Internal.BlankedJson    
 import qualified HaskellWorks.Data.Json.Standard.Cursor.Internal.ToInterestBits64 as J
 import qualified HaskellWorks.Data.Json.Standard.Cursor.SemiIndex                 as SI
 
-{-# ANN module ("HLint: ignore Redundant do"        :: String) #-}
+{- HLINT ignore "Redundant do"        -}
 
 interestBitsOf :: BS.ByteString -> DVS.Vector Word64
 interestBitsOf bs = J.toInterestBits64 (J.toBlankedJsonTyped bs)

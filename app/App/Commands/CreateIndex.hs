@@ -31,8 +31,8 @@ import qualified System.Exit                                                    
 import qualified System.IO                                                          as IO
 import qualified System.IO.MMap                                                     as IO
 
-{-# ANN module ("HLint: ignore Reduce duplication"  :: String) #-}
-{-# ANN module ("HLint: ignore Redundant do"        :: String) #-}
+{- HLINT ignore "Reduce duplication"  -}
+{- HLINT ignore "Redundant do"        -}
 
 runCreateIndex :: Z.CreateIndexOptions -> IO ()
 runCreateIndex opts = do
